@@ -179,7 +179,7 @@ const Header = () => {
                                     <div className="mr-2 font-bold text-base text-white">
                                         Hai, {user?.name?.firstname ?? 'UserName'}
                                     </div>
-                                    <div className="text-slate-700 text-xs">
+                                    <div className={`${user?.googleIntegated ? 'text-green-300' : 'text-slate-200'} max-w-[200px] truncate text-xs`}>
                                         {user?.email}
                                     </div>
                                 </div>

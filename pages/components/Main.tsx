@@ -238,7 +238,7 @@ const Main = () => {
     }, [router.query._id]);
 
     const reloadItems = () => {
-        setIsLoaded(true);
+        // setIsLoaded(true);
         getItems(router.query._id).then((res) => {
             if (res.status === 'success') {
                 setDatas(res.data);
@@ -246,7 +246,7 @@ const Main = () => {
             else if (res.status === 'error') {
                 showSweetAlert('info', 'Peringatan', res?.message, 'Tutup');
             }
-            setIsLoaded(false);
+            // setIsLoaded(false);
         });
     }
 
@@ -304,7 +304,7 @@ const Main = () => {
 
             for (let i = 0; i < files.files.length; i++) {
                 const newQueue = {
-                    id: Math.random(),
+                    id: i + 1,
                     name: files.files[i].name,
                     size: files.files[i].size,
                     progress: 0,
@@ -319,14 +319,17 @@ const Main = () => {
             AxiosUploads(files.files).then((res: any) => {
                 if (res?.status == 'success') {
                     showAlert('success', 'Berhasil', res?.message);
+                    if (res.data?.parent_slug === ID) {
+                        reloadItems();
+                    }
                 }
                 else if (res?.status === 'error') {
                     showSweetAlert('info', 'Peringatan', res?.message, 'Tutup');
                 } else {
                     showAlert('success', 'Berhasil', 'Berkas berhasil diunggah!');
                 }
-                reloadItems();
                 setOnUpload(false);
+                setQueueData([]);
             });
             setFiles({
                 folderId: ID,
@@ -353,10 +356,15 @@ const Main = () => {
                         const progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
                         setQueueData((prev: any) => {
                             return prev.map((item: any) => {
-                                if (item.name == fileName) {
-                                    item.progress = progress;
+                                if (item.id == i + 1) {
+                                    if (item.name == fileName) {
+                                        item.progress = progress;
+                                    }
+                                    if (item.progress == 100) {
+                                        item.status = 'uploaded';
+                                    }
+                                    return item;
                                 }
-                                return item;
                             });
                         });
                     }
