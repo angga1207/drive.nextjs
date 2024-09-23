@@ -33,7 +33,7 @@ export async function serverCheck() {
             if (data.user === null) {
                 localStorage.removeItem('token');
                 deleteCookie('token');
-                window.location.href = '/login';
+                // window.location.href = '/login';
             }
             localStorage.setItem('user', data.data);
         }
