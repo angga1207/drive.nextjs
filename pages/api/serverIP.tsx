@@ -8,8 +8,8 @@ import axios, { AxiosRequestConfig } from "axios";
 // const CurrentToken = getCookie('token');
 
 export function BaseUri() {
-    // const uri = 'http://127.0.0.1:8000/api';
-    const uri = 'http://drive-backend.oganilirkab.go.id/api';
+    const uri = 'http://127.0.0.1:8000/api';
+    // const uri = 'http://drive-backend.oganilirkab.go.id/api';
     return uri;
 }
 
@@ -33,7 +33,7 @@ export async function serverCheck() {
             if (data.user === null) {
                 localStorage.removeItem('token');
                 deleteCookie('token');
-                // window.location.href = '/login';
+                window.location.href = '/login';
             }
             localStorage.setItem('user', data.data);
         }

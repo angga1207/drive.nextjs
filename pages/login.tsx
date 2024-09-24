@@ -70,11 +70,11 @@ const Login = () => {
         recaptchaRef?.current?.reset();
     }
 
-    // useEffect(() => {
-    //     if (localStorage.getItem('token')) {
-    //         window.location.href = '/';
-    //     }
-    // }, [Token]);
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            window.location.href = '/';
+        }
+    }, [Token]);
 
     const tryLogin = () => {
         Object.keys(datas).map((key) => {
